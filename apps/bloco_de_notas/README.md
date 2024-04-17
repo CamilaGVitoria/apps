@@ -1,16 +1,15 @@
 # bloco_de_notas
 
-A new Flutter project.
+Bloco de Notas
 
-## Getting Started
+## O que é:
 
-This project is a starting point for a Flutter application.
+É um projeto de um aplicativo de Bloco de notas feito inicialmente com o intuito de ser apresentado como seminário na matéria de projeto de Software.
 
-A few resources to get you started if this is your first Flutter project:
+Originalmete com a ideia da criação de uma Home Page onde serão exibidas as notas já criadas com título e prévia da nota, uma Cadastro Page onde serão inseridos o título e o contéudo da nota e por fim uma página onde a nota será exibida por completo.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+PROJETO AINDA EM DESENVOLVIMENTO
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![app_bloco_de_notas_home_page](https://github.com/CamilaGVitoria/apps/assets/102991464/69ff9ea6-675a-4bc9-b404-a85934904c63)
+![app_bloco_de_notas_cadastro_page](https://github.com/CamilaGVitoria/apps/assets/102991464/83a69859-cb0f-464f-83d7-7e4c0ede3aa5)
+
