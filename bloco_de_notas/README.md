@@ -10,6 +10,8 @@ Tem como objetivo ser um aplicativo completo feito do zero, utiliza o banco de d
 
 PROJETO AINDA EM DESENVOLVIMENTO
 
+<img src="https://drive.google.com/file/d/1lQhjqZMYOLv1RHtkqraggTR8BcXgG2yH/view?usp=drive_link" alt="Tela de Login">
+
 ![Tela de Login](https://drive.google.com/file/d/1lQhjqZMYOLv1RHtkqraggTR8BcXgG2yH/view?usp=drive_link)
 ![Tela de cadastro de novo usuário](https://drive.google.com/file/d/1lT5xP8eLUe41uY-0zz48NoHvrWHx9FTa/view?usp=drive_link)
 ![Tela em que as notas serão exibidas](https://drive.google.com/file/d/1lXConB6K2jDy3kGw_M49j1pks4OOYYxA/view?usp=drive_link)
