@@ -10,12 +10,31 @@ Tem como objetivo ser um aplicativo completo feito do zero, utiliza o banco de d
 
 PROJETO AINDA EM DESENVOLVIMENTO
 
-<img src="https://drive.google.com/file/d/1lQhjqZMYOLv1RHtkqraggTR8BcXgG2yH/view?usp=drive_link" alt="Tela de Login">
+Ordem das telas: 
 
-![Tela de Login](https://drive.google.com/file/d/1lQhjqZMYOLv1RHtkqraggTR8BcXgG2yH/view?usp=drive_link)
-![Tela de cadastro de novo usuário](https://drive.google.com/file/d/1lT5xP8eLUe41uY-0zz48NoHvrWHx9FTa/view?usp=drive_link)
-![Tela em que as notas serão exibidas](https://drive.google.com/file/d/1lXConB6K2jDy3kGw_M49j1pks4OOYYxA/view?usp=drive_link)
-![Tela de cadastro de notas ainda não preenchida](https://drive.google.com/file/d/1leONQWAvL8-tO5_6-4oGEZrHVKhjyOLg/view?usp=drive_link)
-![Tela de cadastro de notas preenchida](https://drive.google.com/file/d/1lsGQPCtSRVsa56zrhYjoZAhISt3OPQCE/view?usp=drive_link)
-![Tela onde as notas criadas estão sendo exibidas](https://drive.google.com/file/d/1lu1LcsOYvCRsT1d01WuTuUhRvO1vd6iD/view?usp=drive_link)
-![Tela para visualizar a nota completa](https://drive.google.com/file/d/1lsoQFez-J7I22PlGyXjvC7x9R6BcNFN5/view?usp=drive_link)
+1ª Tela de Login
+
+2ª Tela de cadastro de novo usuário
+
+3ª Tela em que as notas serão exibidas
+
+4ª Tela de cadastro de notas ainda não preenchida
+
+5ª Tela de cadastro de notas preenchida
+
+6º Tela onde as notas criadas estão sendo exibidas
+
+7º Tela para visualizar a nota completa
+
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/13388806-16ef-402d-bec1-177bafe5adc4" width="300px" />
+<img src="https://github.com/user-attachments/assets/4d8284b9-7ffc-4922-bebc-bfadcc8b992d" width="300px" />
+<img src="https://github.com/user-attachments/assets/33f974cd-005d-4990-97d7-4b7351db2d50" width="300px" />
+<img src="https://github.com/user-attachments/assets/417cac25-e41e-418f-a1b4-401d2613e49d" width="300px" />
+<img src="https://github.com/user-attachments/assets/08548a23-c0ec-489f-908e-cff5e841210c" width="300px" />
+<img src="https://github.com/user-attachments/assets/8035b01b-4a3f-4149-bee4-c564c27d4b6e" width="300px" />
+<img src="https://github.com/user-attachments/assets/5057dfb8-fac8-44b8-9e8b-242cfb87fffd" width="300px" />
+</div>
+
+
