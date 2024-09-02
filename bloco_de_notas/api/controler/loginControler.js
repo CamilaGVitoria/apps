@@ -9,7 +9,7 @@ module.exports = {
             res.status(422).json({ error: errors.mapped() });
             return;
         }
-
+        
         const data = matchedData(req);
         const userExists = await User.findOne({ userName: data.userName });
 
