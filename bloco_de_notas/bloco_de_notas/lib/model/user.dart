@@ -8,6 +8,7 @@ class User {
   User.fromJson(Map<dynamic, dynamic> json) {
     id = json['_id'];
     userName = json['userName'];
+    password = json['password'];
   }
 
   Map<String, dynamic> toJson() {

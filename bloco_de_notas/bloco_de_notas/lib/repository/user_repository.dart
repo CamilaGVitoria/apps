@@ -1,32 +1,31 @@
 import 'package:bloco_de_notas/model/user.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class UserRepository extends GetConnect{
   Future<User?> loginUser(String userName, String password) async{
 
-    var path = 'http://192.168.1.13:8000/user/login';
+    final path = 'http://10.1.4.175:8000/user/login';
 
-    final response = await post(path, {
+    final response = await http.post(Uri.parse(path), body: {
       'userName' : userName,
       'password' : password,
     });
 
-    if (response.status.hasError) {
-      throw Exception('Erro ao fazer login: ${response.statusText}');
+    if (response.statusCode != 200) {
+      print('Erro ao fazer login: ${response.body}');
     }
-
-    final user = User.fromJson(response.body);
-    return user;
   }
 
   Future<User?> addUser(User user) async {
-    final path = 'http://192.168.1.13:8000/user/add';
-    final response = await post(path, user.toJson());
+    final path = 'http://10.1.4.175:8000/user/add';
+    final response = await http.post(Uri.parse(path), body: {
+      'userName' : user.userName,
+      'password' : user.password
+    });
 
-    if (response.status.hasError) {
-      throw Exception('Erro ao adicionar usuário: ${response.statusText}');
+    if (response.statusCode != 200) {
+      throw Exception('Erro ao adicionar usuário: ${response.body}');
     }
-
-    return User.fromJson(response.body);
   }
 }

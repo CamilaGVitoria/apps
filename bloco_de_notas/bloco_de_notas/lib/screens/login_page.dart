@@ -139,6 +139,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.redAccent,
         colorText: Colors.white,
       );
+      print('Erro ao fazer login: $e');
     }
   }
 }

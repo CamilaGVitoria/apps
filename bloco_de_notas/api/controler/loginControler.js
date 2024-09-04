@@ -29,6 +29,9 @@ module.exports = {
             password: passwordHash
         });
 
+
+        try {
+        
         const user = await newUser.save();
 
         res.status(201).json({
@@ -38,6 +41,13 @@ module.exports = {
                 userName: user.userName
             }
         });
+
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({
+                msg: 'Erro no servidor!'
+            });
+        }
 
     },
 

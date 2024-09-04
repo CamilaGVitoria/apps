@@ -1,6 +1,5 @@
 import 'package:bloco_de_notas/controllers/user_controller.dart';
 import 'package:bloco_de_notas/model/user.dart';
-import 'package:bloco_de_notas/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
