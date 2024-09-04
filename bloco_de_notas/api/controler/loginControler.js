@@ -1,6 +1,7 @@
 const User = require('../model/User');
 const { validationResult, matchedData } = require('express-validator');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken'); 
 
 module.exports = {
     addUser: async (req, res) => {
@@ -31,7 +32,11 @@ module.exports = {
         const user = await newUser.save();
 
         res.status(201).json({
-            msg: 'Usuário criado com sucesso!'
+            msg: 'Usuário criado com sucesso!',
+            user: {
+                id: user._id,
+                userName: user.userName
+            }
         });
 
     },
@@ -54,6 +59,24 @@ module.exports = {
                 msg: 'Senha incorreta!'
             });
 
+        }
+
+        try {
+            const secret = process.env.SECRET;
+            const token = jwt.sign(
+                { id: user._id },
+                secret,
+                { expiresIn: '24h' }
+            );
+
+            res.status(200).json({
+                msg: 'Autenticação realizada com sucesso!', token
+            });
+        } catch (error) {
+            console.error(error)
+            res.status(500).json({
+                msg: 'Erro no servidor!'
+            });
         }
     },
 

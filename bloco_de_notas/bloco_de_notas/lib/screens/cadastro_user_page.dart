@@ -1,4 +1,6 @@
-import 'package:bloco_de_notas/login_page.dart';
+import 'package:bloco_de_notas/controllers/user_controller.dart';
+import 'package:bloco_de_notas/model/user.dart';
+import 'package:bloco_de_notas/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +12,11 @@ class CadastroUserPage extends StatefulWidget {
 }
 
 class _CadastroUserPageState extends State<CadastroUserPage> {
+  TextEditingController _userNameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
+  final UserController _userController = Get.put(UserController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,10 +25,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const LoginPage()),
-            ),
+            onPressed: () => Get.offNamed('/'),
             icon: const Icon(
               Icons.exit_to_app_rounded,
               color: Colors.white,
@@ -47,6 +51,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
           Container(
             padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
             child: TextField(
+              controller: _userNameController,
               decoration: InputDecoration(
                 label: const Text(
                   'User name',
@@ -62,6 +67,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
           Container(
             padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
             child: TextField(
+              controller: _passwordController,
               decoration: InputDecoration(
                   label: const Text(
                     'Password',
@@ -78,6 +84,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
           Container(
             padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
             child: TextField(
+              controller: _confirmPasswordController,
               decoration: InputDecoration(
                   label: const Text(
                     'Confirm Password',
@@ -96,9 +103,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
             height: 80,
             width: 150,
             child: ElevatedButton(
-              onPressed: () {
-                Get.offNamed('/');
-              },
+              onPressed: _registerUser,
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightGreen.shade700),
               child: const Text('Cadastrar',
@@ -110,5 +115,25 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
         ],
       ),
     );
+  }
+
+  void _registerUser() async {
+    String userName = _userNameController.text;
+    String password = _passwordController.text;
+    String confirmPassword = _confirmPasswordController.text;
+
+    if (password != confirmPassword) {
+      print('Passwords do not match!');
+      return;
+    }
+
+    User newUser = User(userName: userName, password: password);
+
+    try {
+      await _userController.register(newUser);
+      Get.offNamed('/');
+    } catch (e) {
+      print('Erro ao registrar usuário: $e');
+    }
   }
 }

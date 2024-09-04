@@ -15,7 +15,8 @@ module.exports = {
 
         const newNote = new Notes({
             noteName: data.noteName,
-            noteText: data.noteText
+            noteText: data.noteText,
+            user: req.user.id
         });
 
         const info = await newNote.save();
@@ -24,21 +25,30 @@ module.exports = {
     },
 
     getNote: async (req, res) => {
-        let id = req.params.id;
-        const note = await Notes.findById(id);
+        try {
+            const note = await Notes.findOne({ _id: req.params.id, user: req.user.id });
 
-        if (note == null) {
-            res.json({
-                res: "Nota não encontrada", note
+            if (!note) {
+                return res.status(404).json({
+                    msg: 'Nota não encontrada',
+                });
+            }
+
+            res.status(200).json({ note });
+
+        } catch (error) {
+            res.status(500).json({
+                msg: 'Erro ao buscar a nota!',
+                error: error.message
             });
-            return;
         }
-        res.json({ note })
     },
-
+    
     deleteNotes: async (req, res) => {
-        let id = req.params.id;
-        const note = await Notes.findByIdAndDelete(id);
+        const note = await Notes.findOneAndDelete({
+            _id: req.params.id,
+            user: req.user.id
+        });
 
         if (!note) {
             res.json({
@@ -65,9 +75,9 @@ module.exports = {
         const { noteName, noteText } = req.body;
 
 
-        const note = await Notes.findByIdAndUpdate(
-            id,
-            { noteName, noteText },
+        const note = await Notes.findOneAndUpdate(
+            { _id: req.params.id, user: req.user.id },
+            { noteName: req.body.noteName, noteText: req.body.noteText },
             { new: true, runValidators: true }
         );
 

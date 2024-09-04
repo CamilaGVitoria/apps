@@ -20,6 +20,6 @@ server.use(express.json());
 server.use(cors());
 server.use('/', apiRouters);
 
-server.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, '0.0.0.0', () => {
     console.log(`Servidor rodando na porta: ${process.env.PORT}`);
 });

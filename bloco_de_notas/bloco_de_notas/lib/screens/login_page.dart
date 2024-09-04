@@ -1,6 +1,7 @@
-
+import 'package:bloco_de_notas/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,6 +11,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController _userNameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  final UserRepository userRepository = UserRepository();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
               width: 340,
               padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
               child: TextField(
+                controller: _userNameController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -49,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
               width: 340,
               padding: const EdgeInsets.only(right: 20, left: 20, top: 20),
               child: TextField(
+                controller: _passwordController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -74,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green.shade700),
                 onPressed: () {
-                  Get.offNamed('/home');
+                  _login();
                 },
                 child: const Text(
                   'Login',
@@ -101,5 +108,37 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> _login() async {
+    String userName = _userNameController.text;
+    String password = _passwordController.text;
+
+    try {
+      final token = await userRepository.loginUser(userName, password);
+
+      if (token != null) {
+        final storage = GetStorage();
+        storage.write('token', token);
+
+        Get.offNamed('/home');
+      } else {
+        Get.snackbar(
+          'Erro',
+          'Falha ao fazer login',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Erro ao fazer login:',
+        '${e.toString()}',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+    }
   }
 }

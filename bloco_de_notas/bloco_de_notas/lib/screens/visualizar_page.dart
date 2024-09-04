@@ -1,9 +1,8 @@
-import "package:bloco_de_notas/model/notes.dart";
+import "package:bloco_de_notas/model/note.dart";
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class VisualizarPage extends StatefulWidget {
-  late Notes note;
+  late Note note;
 
   VisualizarPage(this.note);
 
@@ -23,7 +22,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
             IconButton(onPressed: () {}, icon: const Icon(Icons.edit))
           ],
           title: Text(
-            widget.note.name,
+            widget.note.noteName ?? '',
             style: const TextStyle(color: Colors.white),
           ),
           centerTitle: true,
@@ -32,12 +31,12 @@ class _VisualizarPageState extends State<VisualizarPage> {
         body: ListView.builder(
           itemCount: 1,
           itemBuilder: (context, index) {
-            Notes _notes = widget.note;
+            Note _notes = widget.note;
 
             return Container(
               padding: const EdgeInsets.all(20),
               child: Text(
-                _notes.text,
+                _notes.noteText ?? '',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 15,

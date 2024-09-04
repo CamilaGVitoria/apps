@@ -1,4 +1,4 @@
-import 'package:bloco_de_notas/model/notes.dart';
+import 'package:bloco_de_notas/model/note.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
@@ -66,6 +66,7 @@ class _CadastroPageState extends State<CadastroPage> {
 
     if (_nameController.text.isEmpty && _textController.text.isEmpty) {
       Get.offNamed('/home');
+      return;
     }
 
     if (_nameController.text.isEmpty) {
@@ -78,9 +79,9 @@ class _CadastroPageState extends State<CadastroPage> {
     }
 
     if (_formKey.currentState!.validate()) {
-      Notes newNote = Notes(
-        _nameController.text,
-        _textController.text,
+      Note newNote = Note(
+        noteName: _nameController.text,
+        noteText: _textController.text,
       );
       Get.back(result: newNote);
     }

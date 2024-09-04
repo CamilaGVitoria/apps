@@ -1,4 +1,10 @@
-const express = require ('express');
+const cors = require('cors');
+const express = require('express');
+
+const server = express();
+server.use(cors()); 
+server.use(express.json());
+
 const router = express.Router();
 
 const notesControler = require('../controler/noteControler');
@@ -6,20 +12,21 @@ const notesValidator = require('../validator/noteValidator');
 
 const loginControler = require('../controler/loginControler');
 const loginValidator = require('../validator/loginValidator');
+const auth = require('../middleware/auth');
 
 router.get('/ping', (req,res) => {
     res.json({retorno: true});
 });
 
-router.post('/notes/add', notesValidator.manipulateNotes, notesControler.addNote);
+router.post('/notes/add', auth, notesValidator.manipulateNotes, notesControler.addNote);
+router.delete('/notes/:id', auth, notesControler.deleteNotes);
+router.put('/notes/:id', auth, notesValidator.manipulateNotes, notesControler.editNotes);
+router.get('/notes/:id', auth, notesControler.getNote);
+
 router.post('/user/add', loginValidator.manipulateLogin, loginControler.addUser);
+router.post('/user/login', loginControler.login);
+router.delete('/user/:id', auth, loginControler.deleteUser);
+router.put('/user/:id', auth, loginValidator.manipulateLogin, loginControler.editUser);
+router.get('/user/:id', auth, loginControler.getUser);
 
-router.delete('/notes/:id', notesControler.deleteNotes);
-router.delete('/user/:id', loginControler.deleteUser);
-
-router.put('/notes/:id', notesValidator.manipulateNotes, notesControler.editNotes);
-router.put('/user/:id', loginValidator.manipulateLogin, loginControler.editUser);
-
-router.get('/notes/:id', notesControler.getNote);
-router.get('/user/:id', loginControler.getUser);
 module.exports = router;

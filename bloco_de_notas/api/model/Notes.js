@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const modelSchema = new mongoose.Schema({
-    noteName: String,
-    noteText: String
+    noteName: { type: String, required: true },
+    noteText: { type: String, required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
 const modelName = 'Notes';
