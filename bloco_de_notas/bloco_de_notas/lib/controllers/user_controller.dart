@@ -11,7 +11,13 @@ class UserController extends GetxController {
   Future<void> login(String userName, String password) async {
     isLoading(true);
     try {
-      user.value = await userRepository.loginUser(userName, password);
+      final loggedUser = await userRepository.loginUser(userName, password);
+
+      if (loggedUser != null) {
+        user.value = loggedUser;
+      } else {
+        print('Falha ao fazer login: Verifique os dados!');
+      }
     } catch (e) {
       print('Erro ao fazer login: $e');
     } finally {
@@ -21,8 +27,12 @@ class UserController extends GetxController {
 
   Future<void> register(User newUser) async {
     isLoading(true);
-    try{
-      user.value = await userRepository.addUser(newUser);
+    try {
+      final registeredUser = await userRepository.addUser(newUser);
+
+      if (registeredUser != null) {
+        user.value = registeredUser;
+      }
     } catch (e) {
       print('Erro ao registrar usuário: $e');
     } finally {

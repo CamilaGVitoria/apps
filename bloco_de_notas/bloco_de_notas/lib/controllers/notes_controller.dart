@@ -18,7 +18,10 @@ class NotesController extends GetxController {
     isLoading(true);
 
     try {
-      notesList.value = await notesRepository.getNotes(token!);
+      final userId = storage.read('userId');
+      if (userId != null) {
+        notesList.value = await notesRepository.getNotes(userId, token!);
+      }
     } catch (e) {
       print('Erro ao buscar notas: $e');
     } finally {
@@ -31,7 +34,7 @@ class NotesController extends GetxController {
 
     isLoading(true);
 
-    try{
+    try {
       final note = await notesRepository.addNote(newNote, token!);
       if (note != null) {
         notesList.add(note);

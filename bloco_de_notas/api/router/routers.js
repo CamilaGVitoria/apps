@@ -18,10 +18,10 @@ router.get('/ping', (req,res) => {
     res.json({retorno: true});
 });
 
-router.post('/notes/add', auth, notesValidator.manipulateNotes, notesControler.addNote);
+router.post('/notes/add/:id', auth, notesValidator.manipulateNotes, notesControler.addNote);
 router.delete('/notes/:id', auth, notesControler.deleteNotes);
 router.put('/notes/:id', auth, notesValidator.manipulateNotes, notesControler.editNotes);
-router.get('/notes/:id', auth, notesControler.getNote);
+router.get('/notes', auth, notesControler.getNotes);
 
 router.post('/user/add', loginValidator.manipulateLogin, loginControler.addUser);
 router.post('/user/login', loginControler.login);

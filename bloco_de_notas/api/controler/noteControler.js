@@ -24,9 +24,9 @@ module.exports = {
 
     },
 
-    getNote: async (req, res) => {
+    getNotes: async (req, res) => {
         try {
-            const note = await Notes.findOne({ _id: req.params.id, user: req.user.id });
+            const note = await Notes.find({ user: req.user.id });
 
             if (!note) {
                 return res.status(404).json({

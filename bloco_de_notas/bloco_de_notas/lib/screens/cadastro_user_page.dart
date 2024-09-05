@@ -132,6 +132,13 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
       await _userController.register(newUser);
       Get.offNamed('/');
     } catch (e) {
+      Get.snackbar(
+        'Erro ao cadastrar usuário: $e',
+        '${e.toString()}',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
       print('Erro ao registrar usuário: $e');
     }
   }
