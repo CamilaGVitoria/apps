@@ -22,7 +22,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
             IconButton(onPressed: () {}, icon: const Icon(Icons.edit))
           ],
           title: Text(
-            widget.note.noteName ?? '',
+            widget.note.noteName,
             style: const TextStyle(color: Colors.white),
           ),
           centerTitle: true,
@@ -36,7 +36,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
             return Container(
               padding: const EdgeInsets.all(20),
               child: Text(
-                _notes.noteText ?? '',
+                _notes.noteText,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 15,

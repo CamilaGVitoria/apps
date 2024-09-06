@@ -1,59 +1,56 @@
 import 'dart:convert';
 import 'package:bloco_de_notas/model/note.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-class NotesRepository extends GetConnect {
-  Future<List<Note>> getNotes(String userId, String token) async {
-    final path = 'http://10.1.6.129:8000/notes';
+class NotesRepository{
+  final String _url = 'http://10.1.6.59:8000';
+
+  Future<List<Note>> fetchNotes() async {
+    final preferece = await SharedPreferences.getInstance();
+    final token = preferece.getString('token');
 
     final response = await http.get(
-      Uri.parse(path),
+      Uri.parse('$_url/notes'),
       headers: {
-        'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
       },
     );
 
-    if (response.statusCode != 200) {
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((note) => Note.fromJson(note)).toList();
+    } else {
       throw Exception('Erro ao buscar notas: ${response.body}');
     }
-
-    final List<dynamic> jsonData = json.decode(response.body);
-    final notes = jsonData.map((note) => Note.fromJson(note)).toList();
-
-    return notes.cast<Note>();
   }
 
-  Future<Note?> addNote(Note note, String token) async {
-    final path = 'http://10.1.6.129:8000/notes/add';
+  Future<void> addNote(Note note) async {
+    final preferece = await SharedPreferences.getInstance();
+    final token = preferece.getString('token');
 
     final response = await http.post(
-      Uri.parse(path),
-      body: {
-        'noteName': note.noteName,
-        'noteText': note.noteText,
-        'userId': note.userId
-      },
+      Uri.parse('$_url/notes/add/${note.userId}'),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json'
       },
+      body: jsonEncode({
+        'noteName': note.noteName,
+        'noteText': note.noteText,
+        'userId': note.userId
+      }),
     );
 
     if (response.statusCode != 200) {
       throw Exception('Erro ao adicionar nota: ${response.body}');
     }
-
-    final noteJson = json.decode(response.body);
-    return Note.fromJson(noteJson);
   }
 
-  Future<void> deleteNote(String noteId, String token) async {
-    final path = 'http://10.1.6.129:8000/notes/delete/$noteId';
-
+  Future<void> deleteNote(Note note, String token) async {
     final response = await http.delete(
-      Uri.parse(path),
+      Uri.parse('$_url/notes/${note.id}'),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json'
@@ -62,6 +59,30 @@ class NotesRepository extends GetConnect {
 
     if (response.statusCode != 200) {
       throw Exception('Erro ao deletar nota: ${response.body}');
+    }
+
+    return;
+  }
+
+  Future<void> editNote(Note note, String token) async {
+    final response = await http.put(
+      Uri.parse('$_url/notes/${note.id}'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json'
+      },
+      body: jsonEncode({
+        'id': note.id,
+        'noteName': note.noteName,
+        'noteText': note.noteText,
+        'userId': note.userId,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      return;
+    } else {
+      throw Exception('Erro ao editar nota: ${response.body}');
     }
   }
 }

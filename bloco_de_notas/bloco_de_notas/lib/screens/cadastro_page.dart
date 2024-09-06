@@ -1,8 +1,7 @@
+import 'package:bloco_de_notas/controllers/notes_controller.dart';
 import 'package:bloco_de_notas/model/note.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:get/get.dart';
-
 
 class CadastroPage extends StatefulWidget {
   const CadastroPage({super.key});
@@ -12,8 +11,9 @@ class CadastroPage extends StatefulWidget {
 }
 
 class _CadastroPageState extends State<CadastroPage> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _textController = TextEditingController();
+  final NotesController notesController = Get.find();
+  final noteNameController = TextEditingController();
+  final noteTextController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -31,7 +31,7 @@ class _CadastroPageState extends State<CadastroPage> {
               ))
         ],
         title: TextField(
-          controller: _nameController,
+          controller: noteNameController,
           style: const TextStyle(color: Colors.white),
           decoration: const InputDecoration(
             border: InputBorder.none,
@@ -48,7 +48,7 @@ class _CadastroPageState extends State<CadastroPage> {
       body: Form(
         key: _formKey,
         child: TextFormField(
-          controller: _textController,
+          controller: noteTextController,
           decoration: const InputDecoration(
             border: InputBorder.none,
             label: Text('Conteúdo da nota...'),
@@ -62,28 +62,21 @@ class _CadastroPageState extends State<CadastroPage> {
   }
 
   void _saveNote() {
-    FocusScope.of(context).unfocus();
+    final noteName = noteNameController.text;
+    final noteText = noteTextController.text;
+    const userId = '';
 
-    if (_nameController.text.isEmpty && _textController.text.isEmpty) {
-      Get.offNamed('/home');
-      return;
-    }
+    final addNote =
+        Note(id: '', noteName: noteName, noteText: noteText, userId: userId);
 
-    if (_nameController.text.isEmpty) {
-      String date = DateFormat('dd/MM/yyyy - kk:mm').format(DateTime.now());
-      _nameController.text = date;
-    }
-
-    if (_textController.text.isEmpty) {
-      _textController.text = '';
-    }
-
-    if (_formKey.currentState!.validate()) {
-      Note newNote = Note(
-        noteName: _nameController.text,
-        noteText: _textController.text,
-      );
-      Get.back(result: newNote);
-    }
+    notesController.addNote(addNote).then((sucess) {
+      if (sucess) {
+        notesController.fetchNotes();
+        Get.offNamed('/home');
+      } else {
+        Get.snackbar('ERRO', 'Erro ao adicionar nota!',
+        backgroundColor: Colors.red, colorText: Colors.white);
+      }
+    });
   }
 }

@@ -1,19 +1,13 @@
-import 'package:bloco_de_notas/repository/user_repository.dart';
+import 'package:bloco_de_notas/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatelessWidget {
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final UserController _userController = Get.find<UserController>();
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  final UserRepository userRepository = UserRepository();
+  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -111,26 +105,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _login() async {
-    String userName = _userNameController.text;
-    String password = _passwordController.text;
-
     try {
-      final token = await userRepository.loginUser(userName, password);
-
-      if (token != null) {
-        final storage = GetStorage();
-        storage.write('token', token);
-
-        Get.offNamed('/home');
-      } else {
-        Get.snackbar(
-          'Erro',
-          'Falha ao fazer login',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white,
-        );
-      }
+      _userController.login(_userNameController.text, _passwordController.text);
     } catch (e) {
       Get.snackbar(
         'Erro ao fazer login:',

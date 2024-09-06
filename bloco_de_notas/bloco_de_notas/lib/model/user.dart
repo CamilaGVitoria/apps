@@ -1,16 +1,10 @@
-import 'dart:convert';
-
-User userFromJson(String str) => User.fromJson(json.decode(str));
-
-String userToJson(User data) => json.encode(data.toJson());
-
 class User {
-  String? id;
+  String id;
   String userName;
   String password;
 
   User({
-    this.id,
+    required this.id,
     required this.userName,
     required this.password,
   });

@@ -11,10 +11,10 @@ class CadastroUserPage extends StatefulWidget {
 }
 
 class _CadastroUserPageState extends State<CadastroUserPage> {
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
-  final UserController _userController = Get.put(UserController());
+  final  userNameController = TextEditingController();
+  final  passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final UserController userController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
           Container(
             padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
             child: TextField(
-              controller: _userNameController,
+              controller: userNameController,
               decoration: InputDecoration(
                 label: const Text(
                   'User name',
@@ -66,7 +66,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
           Container(
             padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
             child: TextField(
-              controller: _passwordController,
+              controller: passwordController,
               decoration: InputDecoration(
                   label: const Text(
                     'Password',
@@ -83,7 +83,7 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
           Container(
             padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
             child: TextField(
-              controller: _confirmPasswordController,
+              controller: confirmPasswordController,
               decoration: InputDecoration(
                   label: const Text(
                     'Confirm Password',
@@ -117,28 +117,21 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
   }
 
   void _registerUser() async {
-    String userName = _userNameController.text;
-    String password = _passwordController.text;
-    String confirmPassword = _confirmPasswordController.text;
+    final userName = userNameController.text;
+    final password = passwordController.text;
+    final confirmPassword = confirmPasswordController.text;
 
     if (password != confirmPassword) {
       print('Passwords do not match!');
       return;
     }
 
-    User newUser = User(userName: userName, password: password);
-
     try {
-      await _userController.register(newUser);
+      final addUser = User(id: '', userName: userName, password: password);
+
+      userController.addUser(addUser);
       Get.offNamed('/');
     } catch (e) {
-      Get.snackbar(
-        'Erro ao cadastrar usuário: $e',
-        '${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
-      );
       print('Erro ao registrar usuário: $e');
     }
   }

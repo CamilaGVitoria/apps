@@ -1,3 +1,5 @@
+import 'package:bloco_de_notas/controllers/user_controller.dart';
+import 'package:bloco_de_notas/repository/user_repository.dart';
 import 'package:bloco_de_notas/screens/cadastro_page.dart';
 import 'package:bloco_de_notas/screens/cadastro_user_page.dart';
 import 'package:bloco_de_notas/screens/home_page.dart';
@@ -8,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
+  Get.put(UserController());
+  Get.put(UserRepository());
+
   runApp(MyApp());
 }
 

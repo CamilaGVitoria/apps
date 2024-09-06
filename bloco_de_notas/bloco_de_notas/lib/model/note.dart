@@ -1,27 +1,21 @@
-import 'dart:convert';
-
-Note noteFromJson(String str) => Note.fromJson(json.decode(str));
-
-String noteToJson(Note data) => json.encode(data.toJson());
-
 class Note {
-    String? id;
+    String id;
     String noteName;
     String noteText;
-    String? userId;
+    String userId;
 
     Note({
-        this.id,
+        required this.id,
         required this.noteName,
         required this.noteText,
-        this.userId,
+        required this.userId,
     });
 
     factory Note.fromJson(Map<String, dynamic> json) => Note(
-        id: json["id"],
-        noteName: json["noteName"],
-        noteText: json["noteText"],
-        userId: json["userId"],
+        id: json["id"].toString(),
+        noteName: json["noteName"].toString(),
+        noteText: json["noteText"].toString(),
+        userId: json["userId"].toString(),
     );
 
     Map<String, dynamic> toJson() => {
