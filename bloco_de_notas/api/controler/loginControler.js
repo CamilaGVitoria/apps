@@ -53,6 +53,7 @@ module.exports = {
 
     login: async (req, res) => {
         const { userName, password } = req.body;
+        console.log(req.body)
 
         const user = await User.findOne({ userName });
 
@@ -77,8 +78,8 @@ module.exports = {
                 { id: user._id },
                 secret,
                 { expiresIn: '24h' }
-            );
-
+            );  
+            console.log(token)
             res.status(200).json({
                 msg: 'Autenticação realizada com sucesso!', token
             });

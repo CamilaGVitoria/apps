@@ -1,29 +1,35 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:bloco_de_notas/model/note.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NotesRepository{
-  final String _url = 'http://10.1.6.59:8000';
+class NotesRepository {
+  final String _url = 'http://172.20.240.1:8000';
 
   Future<List<Note>> fetchNotes() async {
     final preferece = await SharedPreferences.getInstance();
     final token = preferece.getString('token');
 
-    final response = await http.get(
-      Uri.parse('$_url/notes'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
+    if (token != null) {
+      final response = await http.get(Uri.parse('$_url/notes'),
+          headers: <String, String>{HttpHeaders.authorizationHeader: token});
 
-    if (response.statusCode == 200) {
-      List<dynamic> data = jsonDecode(response.body);
-      return data.map((note) => Note.fromJson(note)).toList();
-    } else {
-      throw Exception('Erro ao buscar notas: ${response.body}');
+      print(response.statusCode);
+
+      List<Note> notes = List<Note>.empty(growable: true);
+
+        if (response.statusCode == 200) {
+          Map<String, dynamic> responseBody = await jsonDecode(response.body);
+          List<dynamic> notesList = responseBody['note'];
+          List<Note> notes =
+              notesList.map((mNote) => Note.fromJson(mNote)).toList();
+          return notes;
+        } else {
+        throw Exception('Erro ao buscar notas: ${response.body}');
+      }
     }
+    return throw Exception('Erro ao buscar notas');
   }
 
   Future<void> addNote(Note note) async {

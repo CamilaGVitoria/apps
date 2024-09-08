@@ -127,9 +127,8 @@ class _CadastroUserPageState extends State<CadastroUserPage> {
     }
 
     try {
-      final addUser = User(id: '', userName: userName, password: password);
 
-      userController.addUser(addUser);
+      userController.addUser(userName, password);
       Get.offNamed('/');
     } catch (e) {
       print('Erro ao registrar usuário: $e');

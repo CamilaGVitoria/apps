@@ -13,9 +13,9 @@ class UserController extends GetxController {
     } 
   }
 
-  Future<void> addUser(User user) async {
+  Future<void> addUser(String userName, String password) async {
     try {
-      await _userRepository.addUser(user);
+      await _userRepository.addUser(userName, password);
     } catch (e) {
       print('Erro ao registrar usuário: $e');
     }
