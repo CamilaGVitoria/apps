@@ -33,13 +33,14 @@ class NotesController extends GetxController {
     }
   }
 
-  Future<bool> addNote(Note note) async {
+  Future<bool> addNote(String noteName, String noteText) async {
     final preferences = await SharedPreferences.getInstance();
     final token = preferences.getString('token');
+    final userId = preferences.getString('userId');
 
     if (token != null) {
       try {
-        await _notesRepository.addNote(note);
+        await _notesRepository.addNote(noteName, noteText);
         return true;
       } catch (e) {
         print('Erro ao adicionar note: $e');
@@ -61,7 +62,7 @@ class NotesController extends GetxController {
         await fetchNotes();
         return true;
       } catch (e) {
-        print('Erro ao deleta nota: $e');
+        print('Erro ao deletar nota: $e');
         return false;
       }
     } else {

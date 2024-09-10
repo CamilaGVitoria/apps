@@ -32,20 +32,20 @@ class NotesRepository {
     return throw Exception('Erro ao buscar notas');
   }
 
-  Future<void> addNote(Note note) async {
+  Future<void> addNote(String noteName, String noteText) async {
     final preferece = await SharedPreferences.getInstance();
     final token = preferece.getString('token');
+    final userId = preferece.getString('userId');
 
     final response = await http.post(
-      Uri.parse('$_url/notes/add/${note.userId}'),
+      Uri.parse('$_url/notes/add/${userId}'),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json'
       },
       body: jsonEncode({
-        'noteName': note.noteName,
-        'noteText': note.noteText,
-        'userId': note.userId
+        'noteName': noteName,
+        'noteText': noteText,
       }),
     );
 

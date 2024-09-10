@@ -1,5 +1,6 @@
 import 'package:bloco_de_notas/controllers/notes_controller.dart';
 import 'package:bloco_de_notas/model/note.dart';
+import 'package:bloco_de_notas/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -64,12 +65,8 @@ class _CadastroPageState extends State<CadastroPage> {
   void _saveNote() {
     final noteName = noteNameController.text;
     final noteText = noteTextController.text;
-    const userId = '';
 
-    final addNote =
-        Note(id: '', noteName: noteName, noteText: noteText, userId: userId);
-
-    notesController.addNote(addNote).then((sucess) {
+    notesController.addNote(noteName, noteText).then((sucess) {
       if (sucess) {
         notesController.fetchNotes();
         Get.offNamed('/home');

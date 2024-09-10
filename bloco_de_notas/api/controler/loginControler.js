@@ -1,7 +1,7 @@
 const User = require('../model/User');
 const { validationResult, matchedData } = require('express-validator');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken'); 
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     addUser: async (req, res) => {
@@ -10,7 +10,7 @@ module.exports = {
             res.status(422).json({ error: errors.mapped() });
             return;
         }
-        
+
         const data = matchedData(req);
         const userExists = await User.findOne({ userName: data.userName });
 
@@ -31,16 +31,16 @@ module.exports = {
 
 
         try {
-        
-        const user = await newUser.save();
 
-        res.status(201).json({
-            msg: 'Usuário criado com sucesso!',
-            user: {
-                id: user._id,
-                userName: user.userName
-            }
-        });
+            const user = await newUser.save();
+
+            res.status(201).json({
+                msg: 'Usuário criado com sucesso!',
+                user: {
+                    id: user._id,
+                    userName: user.userName
+                }
+            });
 
         } catch (error) {
             console.error(error)
@@ -78,10 +78,12 @@ module.exports = {
                 { id: user._id },
                 secret,
                 { expiresIn: '24h' }
-            );  
+            );
             console.log(token)
             res.status(200).json({
-                msg: 'Autenticação realizada com sucesso!', token
+                msg: 'Autenticação realizada com sucesso!', 
+                token, 
+                userId: user._id
             });
         } catch (error) {
             console.error(error)
@@ -119,10 +121,10 @@ module.exports = {
         });
     },
 
-    editUser: async (req,res) => {
+    editUser: async (req, res) => {
         const errors = validationResult(req);
 
-        if(!errors.isEmpty()) {
+        if (!errors.isEmpty()) {
             res.json({
                 error: errors.mapped()
             });

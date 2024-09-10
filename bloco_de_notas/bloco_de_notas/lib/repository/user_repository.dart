@@ -22,11 +22,12 @@ class UserRepository extends GetConnect {
  
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
-      
 
       if (data != null && data['token'] != null) {
         final preferece = await SharedPreferences.getInstance();
         await preferece.setString('token', data['token']);
+        await preferece.setString('id', data['userId']);
+      
         Get.offNamed('/home');
       }
     } else {

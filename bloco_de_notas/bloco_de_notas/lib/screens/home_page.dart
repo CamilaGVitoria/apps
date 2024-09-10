@@ -71,18 +71,8 @@ class _HomePage extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightGreen.shade900,
-        onPressed: () async {
-          try {
-            final newNote = await Get.toNamed('/new_note');
+        onPressed: () async => Get.toNamed('/new_note'),
 
-            if (newNote != null && newNote is Note) {
-              await notesController.addNote(newNote);
-            }
-            setState(() {});
-          } catch (e) {
-            print('Error ${e.toString()}');
-          }
-        },
         child: const Icon(
           Icons.add,
           color: Colors.white,
