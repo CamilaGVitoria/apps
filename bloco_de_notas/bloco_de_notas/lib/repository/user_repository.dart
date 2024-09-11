@@ -26,7 +26,7 @@ class UserRepository extends GetConnect {
       if (data != null && data['token'] != null) {
         final preferece = await SharedPreferences.getInstance();
         await preferece.setString('token', data['token']);
-        await preferece.setString('id', data['userId']);
+        await preferece.setString('userId', data['userId']);
       
         Get.offNamed('/home');
       }
@@ -47,7 +47,6 @@ class UserRepository extends GetConnect {
         'password': password,
       }),
     );
-    var data = json.decode(response.body);
 
     if (response.statusCode == 201) {
       print('Cadastrado!');

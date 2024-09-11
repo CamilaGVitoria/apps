@@ -12,7 +12,7 @@ class Note {
     });
 
     factory Note.fromJson(Map<String, dynamic> json) => Note(
-        id: json["id"].toString(),
+        id: json["_id"].toString(),
         noteName: json["noteName"].toString(),
         noteText: json["noteText"].toString(),
         userId: json["userId"].toString(),

@@ -2,6 +2,7 @@ import 'package:bloco_de_notas/controllers/user_controller.dart';
 import 'package:bloco_de_notas/repository/user_repository.dart';
 import 'package:bloco_de_notas/screens/cadastro_page.dart';
 import 'package:bloco_de_notas/screens/cadastro_user_page.dart';
+import 'package:bloco_de_notas/screens/edit_page.dart';
 import 'package:bloco_de_notas/screens/home_page.dart';
 import 'package:bloco_de_notas/screens/login_page.dart';
 import 'package:bloco_de_notas/model/note.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/new_user', page: () => CadastroUserPage()),
         GetPage(name: '/home', page: () => HomePage()),
         GetPage(name: '/new_note', page: () => CadastroPage()),
+        GetPage(name: '/edit_note', page: () => EditPage()),
         GetPage(name: '/note', page: () => VisualizarPage(Get.arguments as Note)),
 
       ],

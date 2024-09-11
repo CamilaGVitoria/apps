@@ -7,8 +7,10 @@ class NotesController extends GetxController {
   final NotesRepository _notesRepository;
   NotesController(this._notesRepository);
 
-  var notes = <Note>[].obs;
-  var hasError = false.obs;
+  List<Note> _notes = List<Note>.empty(growable: true).obs;
+
+  List<Note> get notes => _notes;
+
   var isLoading = false.obs;
 
   Future<void> fetchNotes() async {
@@ -17,13 +19,10 @@ class NotesController extends GetxController {
 
     if (token != null) {
       isLoading(true);
-
       try {
         final List<Note> getNotes = await _notesRepository.fetchNotes();
         notes.assignAll(getNotes);
-        hasError(false);
       } catch (e) {
-        hasError(true);
         print('Erro ao buscar notas: $e');
       } finally {
         isLoading(false);
@@ -56,6 +55,8 @@ class NotesController extends GetxController {
     final preferences = await SharedPreferences.getInstance();
     final token = preferences.getString('token');
 
+    print(note.id);
+
     if (token != null) {
       try {
         await _notesRepository.deleteNote(note, token);
@@ -70,26 +71,23 @@ class NotesController extends GetxController {
       return false;
     }
   }
-  
-  Future<bool> editNote(Note note) async {
-  final preferences = await SharedPreferences.getInstance();
-  final token = preferences.getString('token');
 
-  if (token != null) {
-    try {
-      await _notesRepository.editNote(note, token);
-      await fetchNotes();
-      return true;
-    } catch (e) {
-      print('Erro ao atualizar nota: $e');
+  Future<bool> editNote(String id, String noteName, String noteText, String userId) async {
+    final preferences = await SharedPreferences.getInstance();
+    final token = preferences.getString('token');
+
+    if (token != null) {
+      try {
+        await _notesRepository.editNote(id, noteName, noteText, userId, token);
+        await fetchNotes();
+        return true;
+      } catch (e) {
+        print('Erro ao atualizar nota: $e');
+        return false;
+      }
+    } else {
+      print('Token não encontado!');
       return false;
-    } 
-  } else {
-    print('Token não encontado!');
-    return false;
+    }
   }
-
 }
-
-}
-

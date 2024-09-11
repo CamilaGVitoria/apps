@@ -15,10 +15,6 @@ class NotesRepository {
       final response = await http.get(Uri.parse('$_url/notes'),
           headers: <String, String>{HttpHeaders.authorizationHeader: token});
 
-      print(response.statusCode);
-
-      List<Note> notes = List<Note>.empty(growable: true);
-
         if (response.statusCode == 200) {
           Map<String, dynamic> responseBody = await jsonDecode(response.body);
           List<dynamic> notesList = responseBody['note'];
@@ -48,6 +44,7 @@ class NotesRepository {
         'noteText': noteText,
       }),
     );
+    print(response.body);
 
     if (response.statusCode != 200) {
       throw Exception('Erro ao adicionar nota: ${response.body}');
@@ -55,6 +52,8 @@ class NotesRepository {
   }
 
   Future<void> deleteNote(Note note, String token) async {
+
+
     final response = await http.delete(
       Uri.parse('$_url/notes/${note.id}'),
       headers: {
@@ -70,22 +69,22 @@ class NotesRepository {
     return;
   }
 
-  Future<void> editNote(Note note, String token) async {
+  Future<void> editNote(String id, String noteName, String noteText, String userId, String token) async {
     final response = await http.put(
-      Uri.parse('$_url/notes/${note.id}'),
+      Uri.parse('$_url/notes/${id}'),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json'
       },
       body: jsonEncode({
-        'id': note.id,
-        'noteName': note.noteName,
-        'noteText': note.noteText,
-        'userId': note.userId,
+        '_id': id,
+        'noteName': noteName,
+        'noteText': noteText,
+        'userId': userId,
       }),
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return;
     } else {
       throw Exception('Erro ao editar nota: ${response.body}');

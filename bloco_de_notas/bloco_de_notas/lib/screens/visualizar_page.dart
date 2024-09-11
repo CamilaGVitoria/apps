@@ -1,5 +1,6 @@
-import "package:bloco_de_notas/model/note.dart";
+import 'package:bloco_de_notas/model/note.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class VisualizarPage extends StatefulWidget {
   late Note note;
@@ -18,8 +19,16 @@ class _VisualizarPageState extends State<VisualizarPage> {
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.edit))
+            IconButton(
+                onPressed: () {
+                  Get.toNamed('/edit_note', arguments: {
+                    'noteId': widget.note.id,
+                    'noteName': widget.note.noteName,
+                    'noteText': widget.note.noteText,
+                    'userId': widget.note.userId,
+                  });
+                },
+                icon: const Icon(Icons.edit))
           ],
           title: Text(
             widget.note.noteName,
