@@ -48,7 +48,7 @@ class _HomePage extends State<HomePage> {
         if (notesController.isLoading.value) {
           return const Center(
             child: CircularProgressIndicator(
-              color: Colors.white, // Cor do indicador de progresso
+              color: Colors.white, 
             ),
           );
         }
@@ -56,12 +56,11 @@ class _HomePage extends State<HomePage> {
         if (notesController.notes.isEmpty) {
           return const Center(
             child: Text(
-              'Erro ao carregar as notas!',
-              style: TextStyle(color: Colors.black),
+              'Sem notas!',
+              style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           );
         }
-        
         return ListView.builder(
           padding: const EdgeInsets.only(top: 10, right: 5, left: 5),
           itemCount: notesController.notes.length,
@@ -71,13 +70,14 @@ class _HomePage extends State<HomePage> {
           },
         );
       }),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.small(
         backgroundColor: Colors.lightGreen.shade900,
         onPressed: () async => Get.toNamed('/new_note'),
         child: const Icon(
           Icons.add,
           color: Colors.white,
         ),
+
       ),
     );
   }

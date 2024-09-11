@@ -1,8 +1,7 @@
 import 'package:bloco_de_notas/controllers/notes_controller.dart';
-import 'package:bloco_de_notas/model/note.dart';
-import 'package:bloco_de_notas/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class CadastroPage extends StatefulWidget {
   const CadastroPage({super.key});
@@ -63,8 +62,18 @@ class _CadastroPageState extends State<CadastroPage> {
   }
 
   void _saveNote() {
+    if (noteNameController.text.isEmpty) {
+      String date = DateFormat('dd/MM/yyyy - kk:mm').format(DateTime.now());
+      noteNameController.text = date;
+    }
+    if (noteTextController.text.isEmpty) {
+      String text = '';
+      noteTextController.text = text;
+    }
+
     final noteName = noteNameController.text;
     final noteText = noteTextController.text;
+
 
     notesController.addNote(noteName, noteText).then((sucess) {
       if (sucess) {
