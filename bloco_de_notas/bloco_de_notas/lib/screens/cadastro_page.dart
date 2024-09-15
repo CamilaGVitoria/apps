@@ -65,24 +65,25 @@ class _CadastroPageState extends State<CadastroPage> {
     if (noteNameController.text.isEmpty) {
       String date = DateFormat('dd/MM/yyyy - kk:mm').format(DateTime.now());
       noteNameController.text = date;
+    }else if(noteTextController.text.isEmpty || noteTextController.text == ""){
+      Get.snackbar("Erro", "Texto da nota obrigatório",
+      backgroundColor: Colors.red, colorText: Colors.white);
+      
+    }else{
+      final noteName = noteNameController.text;
+      final noteText = noteTextController.text;
+
+      notesController.addNote(noteName, noteText).then((sucess) {
+        if (sucess) {
+          notesController.fetchNotes();
+          Get.offNamed('/home');
+        } else {
+          Get.snackbar('ERRO', 'Erro ao adicionar nota!',
+          backgroundColor: Colors.red, colorText: Colors.white);
+        }
+      });
     }
-    if (noteTextController.text.isEmpty) {
-      String text = '';
-      noteTextController.text = text;
-    }
 
-    final noteName = noteNameController.text;
-    final noteText = noteTextController.text;
-
-
-    notesController.addNote(noteName, noteText).then((sucess) {
-      if (sucess) {
-        notesController.fetchNotes();
-        Get.offNamed('/home');
-      } else {
-        Get.snackbar('ERRO', 'Erro ao adicionar nota!',
-        backgroundColor: Colors.red, colorText: Colors.white);
-      }
-    });
+    
   }
 }

@@ -13,9 +13,13 @@ module.exports = {
 
         const data = matchedData(req);
 
+        console.log(data)
+
+      
+
         const newNote = new Notes({
             noteName: data.noteName,
-            noteText: data.noteText,
+            noteText: data.noteText ? data.noteText : " ",
             user: req.user.id
         });
 

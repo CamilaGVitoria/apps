@@ -33,16 +33,20 @@ class NotesRepository {
     final token = preferece.getString('token');
     final userId = preferece.getString('userId');
 
+    final jsonData = jsonEncode({
+        'noteName': noteName,
+        'noteText': noteText,
+      });
+    
+    print(jsonData);
+    
     final response = await http.post(
       Uri.parse('$_url/notes/add/${userId}'),
       headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json'
       },
-      body: jsonEncode({
-        'noteName': noteName,
-        'noteText': noteText,
-      }),
+      body: jsonData,
     );
     print(response.body);
 
