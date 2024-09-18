@@ -13,8 +13,6 @@ module.exports = {
 
         const data = matchedData(req);
 
-        console.log(data)
-
       
 
         const newNote = new Notes({
